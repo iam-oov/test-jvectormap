@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <title>Jvectormap</title>
+
+  <link rel='stylesheet' href='jquery-jvectormap-2.0.5.css'/>
+
+  <style>
+    #map {
+      height: 600px;
+      width: 400px;
+      background: red;
+    }
+  </style>
+</head>
+<body>
+  <!-- jquery -->
+  <script
+  src='https://code.jquery.com/jquery-3.6.1.min.js'
+  integrity='sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ='
+  crossorigin='anonymous'></script>
+
+  <!-- jvectormap -->
+  <script src='jquery-jvectormap-2.0.5.min.js'></script>
+  <!-- jvectormap:nuevo_leon-->
+  <script src='jvectormap.nuevo_leon.js'></script>
+
+  <h1> Hola 👋 </h1>
+  <div id='map'></div>
+
+  <script type="text/javascript">
+    const dataFromServer = {
+      Abasolo: "#626262",
+      Agualeguas: "#626262",
+      Allende: "#626262",
+      Anahuac: "#626262",
+      Apodaca: "#F7C028",
+      Aramberri: "#626262",
+      Bustamante: "#626262",
+      Cadereyta_Jimenez: "#F7C028",
+      Carmen: "#626262",
+      Cerralvo: "#626262",
+      China: "#00FF23",
+      Cienega_De_Flores: "#F7C028",
+      Dr_Arroyo: "#626262",
+      Dr_Coss: "#626262",
+      Dr_Gonzalez: "#626262",
+      Galeana: "#626262",
+      Garcia: "#F7C028",
+      Gral_Bravo: "#626262",
+      Gral_Escobedo: "#626262",
+      Gral_Teran: "#626262",
+      Gral_Trevi: "#626262",
+      Gral_Trevino: "#626262",
+      Gral_Zaragoza: "#626262",
+      Gral_Zuazua: "#626262",
+      Guadalupe: "#671212",
+      Hidalgo: "#626262",
+      Higueras: "#626262",
+      Hualahuises: "#626262",
+      Iturbide: "#626262",
+      Juarez: "#F7C028",
+      Lampazos_De_Naranjo: "#626262",
+      Linares: "#00FF23",
+      Los_Aldamas: "#626262",
+      Los_Herreras: "#626262",
+      Los_Ramones: "#00FF23",
+      Marin: "#626262",
+      Melchor_Ocampo: "#626262",
+      Mier_Y_Noriega: "#626262",
+      Mina: "#626262",
+      Montemorelos: "#00FF23",
+      Monterrey: "#B92424",
+      Paras: "#626262",
+      Pesqueria: "#F7C028",
+      Rayones: "#626262",
+      Sabinas_Hidalgo: "#626262",
+      Salinas_Victoria: "#00FF23",
+      San_Nicolas_De_Los_Garza: "#F7C028",
+      San_Pedro_Garza_Garcia: "#626262",
+      Santa_Catarina: "#F7C028",
+      Santiago: "#626262",
+      Vallecillo: "#626262",
+      Villaldama: "#626262",
+    }
+  </script>
+
+  <script type="text/javascript">
+    function createMap() {
+      $('#map').vectorMap({
+        map: 'nuevo_leon',
+        backgroundColor: "#transparent",
+        zoomOnScroll: false,
+        zoomMax: 4,
+        zoomStep: 1.2,
+        focusOn: {
+          x: 4.9,
+          y: .5,
+          scale: 1
+        },
+        regionStyle: {
+          initial: {
+            stroke:"#c6b45a",
+            "stroke-width": 2,
+          },
+          hover: {
+            "fill-opacity": 0.8
+          },
+        },
+        series: {
+          regions: [{
+            attribute: 'fill',
+          }],
+        },
+        onRegionLabelShow: function(e, el, code){
+          code = code.replace(/_/g, " ");
+          el.html(code); 
+        },
+      });
+    }
+
+    function updateMap (data) {
+      const mapObject = $('#map').vectorMap('get', 'mapObject')
+      mapObject.series.regions[0].setValues(data)
+    }
+
+    createMap()
+    setTimeout(() => {
+      updateMap(dataFromServer)
+    }, 1000)
+  </script>
+</body>
+</html>
